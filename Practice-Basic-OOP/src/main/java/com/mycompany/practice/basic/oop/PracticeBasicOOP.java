@@ -10,16 +10,19 @@ package com.mycompany.practice.basic.oop;
 public class PracticeBasicOOP {
 
     public static void main(String[] args) {
-        MotorBike ducati = new MotorBike();
-        MotorBike honda = new MotorBike();
+        MotorBike ducati = new MotorBike(30);
+        MotorBike honda = new MotorBike(60);
+        MotorBike yamaha = new MotorBike();
 
-        ducati.setSpeed(100);
+        ducati.accelerate(100);
+        ducati.decreaseSpeed(500);
 
-        int ducatiSpeed = ducati.getSpeed();
-        ducatiSpeed += 100;
-        ducati.setSpeed(ducatiSpeed);
+        honda.accelerate(50);
+        honda.decreaseSpeed(99);
 
         System.out.println(ducati.getSpeed());
+        System.out.println(honda.getSpeed());
+        System.out.println(yamaha.getSpeed());
 
     }
 }
