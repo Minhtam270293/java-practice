@@ -19,7 +19,7 @@ public class StudentRunner {
 //        String value = person.toString();
 //        System.out.println(value);
 //        System.out.println(person);
-        Employee shiro = new Employee();
+        Employee shiro = new Employee("Axe", "offlane");
         shiro.setName("Anti mage");
         shiro.setTitle("Senior carry");
 
