@@ -13,23 +13,26 @@ public class DTAndriod extends DTDD {
     private String hangSX;
     private double boNhoRam;
 
-    public DTAndriod(String masp, String tensp, double boNhoTrong, double giaNhap, double giaBan, String hangSX, double boNhoRam, boolean isNhapKhau) {
-        this.setMasp(masp);
-        this.setTensp(tensp);
-        this.setBoNhoTrong(boNhoTrong);
-        this.setGiaNhap(giaNhap);
-        this.setGiaBan(giaBan);
-        this.hangSX = hangSX;
-        this.boNhoRam = boNhoRam;
-        this.setNhapKhauInfo(isNhapKhau);
+    public DTAndriod(String masp, String tensp, double boNhoTrong, double giaNhap, double giaBan, String hangSX, double boNhoRam) throws DTException {
+        super(masp, tensp, boNhoTrong, giaNhap, giaBan);
+        this.setHangSX(hangSX);
+        this.setBoNhoRam(boNhoRam);
+    }
 
+    public DTAndriod(DTAndriod other) throws DTException {
+        this(other.getMasp(), other.getTensp(), other.getBoNhoTrong(), other.getGiaNhap(), other.getGiaBan(), other.hangSX, other.boNhoRam);
     }
 
     public String getHangSX() {
         return hangSX;
     }
 
-    public void setHangSX(String hangSX) {
+    public void setHangSX(String hangSX) throws DTException {
+
+        if (hangSX == null) {
+            throw new DTException("Ten hang khong duoc rong");
+        }
+
         this.hangSX = hangSX;
     }
 
@@ -37,7 +40,12 @@ public class DTAndriod extends DTDD {
         return boNhoRam;
     }
 
-    public void setBoNhoRam(double boNhoRam) {
+    public void setBoNhoRam(double boNhoRam) throws DTException {
+
+        if (boNhoRam <= 0) {
+            throw new DTException("Ram khong duoc <= 0");
+        }
+
         this.boNhoRam = boNhoRam;
     }
 

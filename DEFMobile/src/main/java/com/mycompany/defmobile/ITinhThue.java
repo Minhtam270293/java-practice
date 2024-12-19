@@ -11,4 +11,6 @@ package com.mycompany.defmobile;
 public interface ITinhThue {
 
     double tinhThueNhapKhau();
+
+    double tinhThueVAT();
 }

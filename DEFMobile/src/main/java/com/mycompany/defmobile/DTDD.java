@@ -8,29 +8,37 @@ package com.mycompany.defmobile;
  *
  * @author NguyenMinhTam
  */
+public abstract class DTDD implements ITinhThue {
 
-/*
-Điện thoại Android có các thuộc tính:
-mã sản phẩm, tên sản phẩm, ..hãng sản xuất, ..dung lượng RAM, dung lượng bộ nhớ trong, giá nhập, giá bán.
-Điện thoại iOS có các thuộc tính:
-mã sản phẩm, tên sản phẩm, ..phiên bản hệ điều hành, dung lượng bộ nhớ trong, giá nhập, giá bán.
- */
-public abstract class DTDD {
+    private static final double VAT = 0.1;
+    private static final double THUE_NHAP_KHAU = 0.1;
 
     private String masp;
     private String tensp;
     private double boNhoTrong;
     private double giaNhap;
     private double giaBan;
-    private boolean isNhapKhau;
-    private double thueNhapKhau;
-    private String nuocSX;
+
+    public DTDD(String masp, String tensp, double boNhoTrong, double giaNhap, double giaBan) throws DTException {
+        this.setMasp(masp);
+        this.setTensp(tensp);
+        this.setBoNhoTrong(boNhoTrong);
+        this.setGiaNhap(giaNhap);
+        this.setGiaBan(giaBan);
+    }
+
+    public DTDD(DTDD other) throws DTException {
+        this(other.masp, other.tensp, other.boNhoTrong, other.giaNhap, other.giaBan);
+    }
 
     public String getMasp() {
         return masp;
     }
 
-    public void setMasp(String masp) {
+    public void setMasp(String masp) throws DTException {
+        if (masp == null || masp.trim().isEmpty()) {
+            throw new DTException("Ma san pham khong duoc de trong hoac null");
+        }
         this.masp = masp;
     }
 
@@ -46,7 +54,10 @@ public abstract class DTDD {
         return boNhoTrong;
     }
 
-    public void setBoNhoTrong(double boNhoTrong) {
+    public void setBoNhoTrong(double boNhoTrong) throws DTException {
+        if (boNhoTrong < 0) {
+            throw new DTException("Bo nho trong khong duoc am");
+        }
         this.boNhoTrong = boNhoTrong;
     }
 
@@ -54,7 +65,10 @@ public abstract class DTDD {
         return giaNhap;
     }
 
-    public void setGiaNhap(double giaNhap) {
+    public void setGiaNhap(double giaNhap) throws DTException {
+        if (giaNhap <= 0) {
+            throw new DTException("Gia nhap phai lon hon 0");
+        }
         this.giaNhap = giaNhap;
     }
 
@@ -62,43 +76,20 @@ public abstract class DTDD {
         return giaBan;
     }
 
-    public void setGiaBan(double giaBan) {
+    public void setGiaBan(double giaBan) throws DTException {
+        if (giaBan <= 0) {
+            throw new DTException("Gia ban phai lon hon 0");
+        }
         this.giaBan = giaBan;
     }
 
-    public boolean getNhapKhauInfo() {
-        return isNhapKhau;
+    @Override
+    public double tinhThueNhapKhau() {
+        return this.giaNhap * (1 + DTDD.THUE_NHAP_KHAU);
     }
 
-    public void setNhapKhauInfo(boolean isNhapKhau) {
-        this.isNhapKhau = isNhapKhau;
-        if (!isNhapKhau) {
-            this.nuocSX = "Domestic";
-            this.thueNhapKhau = 0;
-        }
-    }
-
-    public String getNuocSX() {
-        return nuocSX;
-    }
-
-    public void setNuocSX(String nuocSX) throws DTException {
-        if (!this.isNhapKhau) {
-            throw new DTException("Khong thuc hien duoc voi dien thoai trong nuoc");
-        }
-
-        this.nuocSX = nuocSX;
-    }
-
-    public double getThueNhapKhau() {
-        return thueNhapKhau;
-    }
-
-    public void setThueNhapKhau(double thue) throws DTException {
-        if (!this.isNhapKhau) {
-            throw new DTException("Khong thuc hien duoc voi dien thoai trong nuoc");
-        }
-
-        this.thueNhapKhau = thue;
+    @Override
+    public double tinhThueVAT() {
+        return this.giaBan * DTDD.VAT;
     }
 }
