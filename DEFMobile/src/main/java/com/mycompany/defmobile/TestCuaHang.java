@@ -85,34 +85,34 @@ public class TestCuaHang {
         DEFMobile.banHang(pudge, androidPhones);
 
         // Test timKhachMuaNhieuSPNhat
-        System.out.println("\n=== Customers with the Most Products Purchased ===");
-        List<KhachHang> mostPurchasingCustomers = DEFMobile.timKhachMuaNhieuSPNhat();
-        for (KhachHang kh : mostPurchasingCustomers) {
-            int totalProducts = kh.getDsDonHang().stream()
-                    .mapToInt(dh -> dh.getDsSanPham().size()) // Count products in each order
+        System.out.println("\n=== QUY KHACH HANG DA MUA NHIEU DIEN THOAI NHAT ===");
+        List<KhachHang> khachMuaNhieuDTNhat = DEFMobile.timKhachMuaNhieuSPNhat();
+        for (KhachHang kh : khachMuaNhieuDTNhat) {
+            int tongSL = kh.getDsDonHang().stream()
+                    .mapToInt(dh -> dh.getDsSanPham().size())
                     .sum();
-            System.out.println("Customer: " + kh.getHoTen() + " - Total Products: " + totalProducts);
+            System.out.println("Quy khach hang: " + kh.getHoTen() + " - So luong: " + tongSL);
         }
 
         // Test timKhachMuaGiaTriCaoNhatCuaNam
-        System.out.println("\n=== Customers with the Highest Purchase Value in 2024 ===");
-        List<KhachHang> highestValueCustomers = DEFMobile.timKhachMuaGiaTriCaoNhatCuaNam(2024);
-        for (KhachHang kh : highestValueCustomers) {
-            System.out.println("Customer: " + kh.getHoTen());
+        System.out.println("\n=== QUY KHACH HANG DONG GOP DOANH SO CAO NHAT NAM 2024 ===");
+        List<KhachHang> khachMuaGiaTriCaoNhat = DEFMobile.timKhachMuaGiaTriCaoNhatCuaNam(2024);
+        for (KhachHang kh : khachMuaGiaTriCaoNhat) {
+            System.out.println("Quy khach hang: " + kh.getHoTen());
         }
 
         // Test dsDTSLBanNhieuNhat
-        System.out.println("\n=== Most Sold Products ===");
-        List<String> mostSoldProducts = DEFMobile.dsDTSLBanNhieuNhat();
-        for (String product : mostSoldProducts) {
-            System.out.println("Product: " + product);
+        System.out.println("\n=== SAN PHAM CO SO LUONG BAN NHIEU NHAT ===");
+        List<String> DTBanNhieuNhat = DEFMobile.dsDTSLBanNhieuNhat();
+        for (String sp : DTBanNhieuNhat) {
+            System.out.println("San pham: " + sp);
         }
 
         // Test dsDTBanGiaTriCaoNhat
-        System.out.println("\n=== Products with the Highest Sales Value in 2024 ===");
-        List<String> highestValueProducts = DEFMobile.dsDTBanGiaTriCaoNhat(2024);
-        for (String product : highestValueProducts) {
-            System.out.println("Product: " + product);
+        System.out.println("\n=== SAN PHAM CO DOANH SO CAO NHAT NAM 2024 ===");
+        List<String> spDoanhSoCaoNhat = DEFMobile.dsDTBanGiaTriCaoNhat(2024);
+        for (String sp : spDoanhSoCaoNhat) {
+            System.out.println("San pham: " + sp);
         }
 
     }

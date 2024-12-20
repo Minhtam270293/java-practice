@@ -245,35 +245,30 @@ public class CuaHang {
             throw new DTException("Danh sách sản phẩm không được null hoặc rỗng");
         }
 
-        // Kiểm tra khách hàng có tồn tại hay không
-        KhachHang existingKhachHang = null;
+        KhachHang khachDaDangKy = null;
         for (KhachHang kh : dsKhachHang) {
             if (kh.getSodt().equals(khachHang.getSodt())) {
-                existingKhachHang = kh;
+                khachDaDangKy = kh;
                 break;
             }
         }
 
-        // Nếu khách hàng không tồn tại, thêm khách hàng vào danh sách
-        if (existingKhachHang == null) {
-            existingKhachHang = khachHang;
-            this.addKhachHang(existingKhachHang);
+        if (khachDaDangKy == null) {
+            khachDaDangKy = khachHang;
+            this.addKhachHang(khachDaDangKy);
         }
 
-        // Tạo mới đơn hàng
         DonHang donHang = new DonHang();
-        donHang.setMadon("DH" + (dsDonHang.size() + 1)); // Tạo mã đơn hàng duy nhất
-        donHang.setNgayBan(new Date()); // Đặt ngày bán hiện tại
-        donHang.setDsSanPham(new ArrayList<>(dsSanPham)); // Gán danh sách sản phẩm
-        donHang.setKhachHang(existingKhachHang); // Gán khách hàng
+        donHang.setMadon("DH" + (dsDonHang.size() + 1));
+        donHang.setNgayBan(new Date());
+        donHang.setDsSanPham(new ArrayList<>(dsSanPham));
+        donHang.setKhachHang(khachDaDangKy);
 
-        // Cập nhật danh sách đơn hàng của khách hàng
-        if (existingKhachHang.getDsDonHang() == null) {
-            existingKhachHang.setDsDonHang(new ArrayList<>());
+        if (khachDaDangKy.getDsDonHang() == null) {
+            khachDaDangKy.setDsDonHang(new ArrayList<>());
         }
-        existingKhachHang.getDsDonHang().add(donHang);
+        khachDaDangKy.getDsDonHang().add(donHang);
 
-        // Thêm đơn hàng vào danh sách đơn hàng của cửa hàng
         this.addDonHang(donHang);
     }
 
